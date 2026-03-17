@@ -6,7 +6,7 @@
 'use strict';
 
 /* ── Config ─────────────────────────────────────────────────────────────── */
-const API = 'http://localhost:8000';
+const API = 'https://ev-q-smart-ev-system.onrender.com';
 
 const AGENT_META = {
   TechnicianAgent:     { icon: '⚙️',  color: '#00e5ff', role: 'Technical Support' },
