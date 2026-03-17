@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EV_Q:? — Electric Vehicle Intelligence System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══ TOAST CONTAINER ═══════════════════════════════════════════════════════ -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- ══ SCAN LINE OVERLAY ═════════════════════════════════════════════════════ -->
+<div class="scanlines" aria-hidden="true"></div>
+
+<!-- ══ NAVIGATION ════════════════════════════════════════════════════════════ -->
+<nav id="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo" aria-label="EV_Q Home">
+      <span class="logo-bolt">⚡</span>
+      <span class="logo-text">EV_Q<span class="logo-tag">:?</span></span>
+    </a>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#home"           class="nav-link active" data-page="home">Home</a></li>
+      <li><a href="#neural-hub"     class="nav-link"        data-page="neural-hub">Neural Hub</a></li>
+      <li><a href="#vehicle-matrix" class="nav-link"        data-page="vehicle-matrix">Vehicle Matrix</a></li>
+      <li><a href="#about"          class="nav-link"        data-page="about">About</a></li>
+    </ul>
+
+    <div class="nav-status">
+      <span class="status-dot" id="api-status-dot"></span>
+      <span class="status-label" id="api-status-label">Connecting…</span>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="ham-bar bar1"></span>
+      <span class="ham-bar bar2"></span>
+      <span class="ham-bar bar3"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ MOBILE DRAWER ═════════════════════════════════════════════════════════ -->
+<!-- Backdrop — dims page when drawer is open -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+<nav class="mobile-drawer" id="mobile-drawer" role="navigation" aria-label="Mobile menu" aria-hidden="true">
+  <div class="drawer-header">
+    <span class="drawer-logo">⚡ EV_Q<span style="color:var(--c-cyan)">:?</span></span>
+    <button class="drawer-close" id="drawer-close" aria-label="Close menu">✕</button>
+  </div>
+  <ul class="drawer-links" role="list">
+    <li><a href="#home"           class="drawer-link" data-page="home"><span class="dl-icon">🏠</span><span class="dl-text">Home</span></a></li>
+    <li><a href="#neural-hub"     class="drawer-link" data-page="neural-hub"><span class="dl-icon">🧬</span><span class="dl-text">Neural Hub</span></a></li>
+    <li><a href="#vehicle-matrix" class="drawer-link" data-page="vehicle-matrix"><span class="dl-icon">🚗</span><span class="dl-text">Vehicle Matrix</span></a></li>
+    <li><a href="#about"          class="drawer-link" data-page="about"><span class="dl-icon">ℹ️</span><span class="dl-text">About</span></a></li>
+  </ul>
+  <div class="drawer-footer">
+    <span class="status-dot" id="drawer-status-dot"></span>
+    <span id="drawer-status-label">Connecting…</span>
+  </div>
+</nav>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- ═══════════════════ PAGE: HOME ═══════════════════════════════════════ -->
+  <section id="page-home" class="page active" data-page="home">
+
+    <!-- Hero -->
+    <div class="hero">
+      <canvas id="hero-canvas" aria-hidden="true" style="background:#020c12;display:block;"></canvas>
+      <div class="hero-content">
+        <div class="hero-badge">MULTI-AGENT AI SYSTEM</div>
+        <h1 class="hero-title">
+          <span class="title-ev">EV</span><span class="title-q">_Q</span><span class="title-mark">:?</span>
+        </h1>
+        <p class="hero-sub">Your Intelligent Electric Vehicle Expert System</p>
+        <div class="hero-counters">
+          <div class="counter-item"><span class="counter-val" data-target="5">0</span><span class="counter-label">AI Agents</span></div>
+          <div class="counter-sep">|</div>
+          <div class="counter-item"><span class="counter-val" data-target="100">0</span><span class="counter-val-unit">+</span><span class="counter-label">EV Models</span></div>
+          <div class="counter-sep">|</div>
+          <div class="counter-item"><span class="counter-val" data-target="24">0</span><span class="counter-val-unit">/7</span><span class="counter-label">Live Support</span></div>
+        </div>
+        <div class="hero-cta">
+          <button class="btn-primary" data-goto="neural-hub">⚡ Ask EV_Q Now</button>
+          <button class="btn-ghost"   data-goto="vehicle-matrix">🚗 Live Vehicle</button>
+        </div>
+      </div>
+      <div class="hero-scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Core Intelligence Modules</h2>
+        <p class="section-sub">Five specialised AI agents — one unified interface</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card" data-index="0">
+          <div class="fc-icon">⚙️</div>
+          <h3>Technical Support</h3>
+          <p>Battery diagnostics, charging faults, motor analysis, range optimisation & step-by-step repairs.</p>
+          <div class="fc-tag">TechnicianAgent</div>
+        </div>
+        <div class="feature-card" data-index="1">
+          <div class="fc-icon">🚗</div>
+          <h3>Sales & Resale</h3>
+          <p>Live model comparisons, market pricing, inventory check & depreciation forecasting.</p>
+          <div class="fc-tag">ResellerAgent</div>
+        </div>
+        <div class="feature-card" data-index="2">
+          <div class="fc-icon">💳</div>
+          <h3>Finance & EMI</h3>
+          <p>Loan calculators, subsidy mapping, total cost of ownership & leasing analysis.</p>
+          <div class="fc-tag">FinancierAgent</div>
+        </div>
+        <div class="feature-card" data-index="3">
+          <div class="fc-icon">🛡️</div>
+          <h3>Policy & Legal</h3>
+          <p>Insurance requirements, warranty terms, safety compliance & government incentives.</p>
+          <div class="fc-tag">PolicyAgent</div>
+        </div>
+        <div class="feature-card" data-index="4">
+          <div class="fc-icon">🧠</div>
+          <h3>Smart Recommendations</h3>
+          <p>Personalised EV picks ranked by budget, range, usage pattern & charging access.</p>
+          <div class="fc-tag">RecommendationAgent</div>
+        </div>
+        <div class="feature-card" data-index="5">
+          <div class="fc-icon">🌐</div>
+          <h3>Live Web Intelligence</h3>
+          <p>Real-time Google Search integration ensures every answer reflects current market data.</p>
+          <div class="fc-tag">All Agents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Queries -->
+    <div class="section bg-alt">
+      <div class="section-header">
+        <h2 class="section-title">Quick Start Queries</h2>
+        <p class="section-sub">Tap any to instantly ask your AI team</p>
+      </div>
+      <div class="quick-grid">
+        <button class="quick-card" data-query="My EV battery drains too fast — what could be wrong?">🔋 Battery Drain Issue</button>
+        <button class="quick-card" data-query="Compare Tata Nexon EV vs MG ZS EV 2024 in detail">⚡ Nexon vs MG ZS</button>
+        <button class="quick-card" data-query="Calculate EMI for a ₹14 lakh EV over 5 years at 9%">💳 EMI Calculator</button>
+        <button class="quick-card" data-query="What EV subsidies are available in Maharashtra 2024?">🏛️ Maharashtra Subsidies</button>
+        <button class="quick-card" data-query="Best EV for daily 60km city commute under ₹20 lakh">🎯 Best EV for Commute</button>
+        <button class="quick-card" data-query="Is home charging safe? What charger should I install?">🏠 Home Charging Setup</button>
+      </div>
+    </div>
+
+    <!-- Home Analytics -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">System Analytics</h2>
+        <p class="section-sub">Real-time usage & performance metrics</p>
+      </div>
+      <div class="analytics-row">
+        <div class="chart-card">
+          <div class="chart-card-title">Agent Utilisation</div>
+          <div class="chart-wrap"><canvas id="home-agent-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">Query Topics Breakdown</div>
+          <div class="chart-wrap"><canvas id="home-topic-chart"></canvas></div>
+        </div>
+        <div class="stats-col">
+          <div class="stat-tile" id="stat-queries">
+            <div class="st-val">0</div>
+            <div class="st-label">Total Queries</div>
+          </div>
+          <div class="stat-tile">
+            <div class="st-val">5</div>
+            <div class="st-label">Active Agents</div>
+          </div>
+          <div class="stat-tile">
+            <div class="st-val" id="stat-status-dot">🟢</div>
+            <div class="st-label">System Status</div>
+          </div>
+          <div class="stat-tile">
+            <div class="st-val">2.5</div>
+            <div class="st-label">Gemini Flash</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-brand">⚡ EV_Q:? — Electric Vehicle Intelligence</p>
+      <p class="footer-sub">Multi-Agent Architecture · Gemini 2.5 Flash Lite · Google ADK · FastAPI</p>
+      <p class="footer-copy">© 2025 EV_Q. Making Electric Mobility Accessible for Everyone.</p>
+    </footer>
+  </section>
+
+  <!-- ═══════════════════ PAGE: NEURAL HUB ═════════════════════════════════ -->
+  <section id="page-neural-hub" class="page" data-page="neural-hub">
+    <div class="hub-layout">
+
+      <!-- Agents Panel -->
+      <aside class="agents-panel" id="agents-panel">
+        <div class="panel-header">
+          <span class="panel-title">⚡ Agent Network</span>
+          <button class="panel-toggle" id="panel-toggle" aria-label="Toggle agents panel">◀</button>
+        </div>
+        <div class="agents-list" id="agents-list">
+          <!-- Injected by JS -->
+        </div>
+        <div class="panel-stats">
+          <div class="ps-row"><span>Session Queries</span><span id="panel-query-count">0</span></div>
+          <div class="ps-row"><span>Agents Fired</span><span id="panel-agents-fired">0</span></div>
+          <div class="ps-row"><span>Model</span><span>Gemini 2.5</span></div>
+        </div>
+        <div class="panel-chart-wrap">
+          <div class="panel-chart-title">Agent Calls This Session</div>
+          <div style="position:relative;height:105px;max-height:105px;">
+            <canvas id="session-agent-chart"></canvas>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Chat Panel -->
+      <div class="chat-panel">
+        <div class="chat-header">
+          <h1 class="chat-title">🧬 Neural EV Hub</h1>
+          <p class="chat-subtitle">Ask anything about Electric Vehicles — your AI fleet is standing by</p>
+          <!-- Live vehicle sensor strip -->
+          <div class="vehicle-sensor-strip" id="vehicle-sensor-strip">
+            <span class="vss-label">🛰️ LIVE SENSORS</span>
+            <span class="vss-data" id="vehicle-sensor-badge" style="opacity:0.4">Connecting to vehicle…</span>
+            <span class="vss-dot"></span>
+          </div>
+
+          <div class="chat-quick-pills">
+            <button class="pill" data-query="Battery draining fast">🔋 Battery</button>
+            <button class="pill" data-query="Compare EVs under ₹20 lakh">⚡ Compare</button>
+            <button class="pill" data-query="Calculate EMI ₹12 lakh">💳 EMI</button>
+            <button class="pill" data-query="EV subsidies 2024">🏛️ Subsidies</button>
+            <button class="pill" data-query="Best EV for me">🎯 Recommend</button>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
+          <!-- Welcome message -->
+          <div class="msg-row assistant">
+            <div class="msg-avatar">⚡</div>
+            <div class="msg-bubble">
+              <p>Welcome to <strong>EV_Q Neural Hub</strong>. I'm your multi-agent EV intelligence system powered by <strong>Gemini 2.5 Flash Lite</strong>.</p>
+              <p>I have 5 specialist agents ready: Technical, Sales, Finance, Policy & Personalisation. Ask me anything about electric vehicles!</p>
+              <div class="msg-agents-row">
+                <span class="msg-agent-badge" style="--c:#00e5ff">⚙️ Technician</span>
+                <span class="msg-agent-badge" style="--c:#00ff9d">🚗 Reseller</span>
+                <span class="msg-agent-badge" style="--c:#ffb800">💳 Financier</span>
+                <span class="msg-agent-badge" style="--c:#ff6b35">🛡️ Policy</span>
+                <span class="msg-agent-badge" style="--c:#a78bfa">🧠 Recommender</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea id="chat-input" placeholder="Ask about EVs — battery, finance, models, policy…" rows="1" aria-label="Chat input"></textarea>
+            <button class="send-btn" id="send-btn" aria-label="Send message">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            </button>
+          </div>
+          <div class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</div>
+        </div>
+
+        <button class="clear-chat-btn" id="clear-chat" title="Clear conversation">🗑️ Clear</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PAGE: VEHICLE MATRIX ═════════════════════════════ -->
+  <section id="page-vehicle-matrix" class="page" data-page="vehicle-matrix">
+    <div class="vm-header">
+      <h1 class="vm-title">🚗 Vehicle Matrix</h1>
+      <p class="vm-sub">Live EV Telemetry Dashboard · Real-time simulation</p>
+      <div class="vm-drive-mode" id="vm-drive-mode">NORMAL MODE</div>
+
+      <!-- Mode selector -->
+      <div class="mode-selector-wrap" id="mode-selector-wrap">
+        <div class="mode-selector" role="group" aria-label="Drive mode selector" id="mode-selector">
+          <button class="mode-btn" data-mode="ECO"       title="Economy — max range">
+            <span class="mode-btn-icon">🌿</span><span class="mode-btn-label">ECO</span>
+          </button>
+          <button class="mode-btn active" data-mode="NORMAL" title="Normal — balanced">
+            <span class="mode-btn-icon">⚡</span><span class="mode-btn-label">NORMAL</span>
+          </button>
+          <button class="mode-btn" data-mode="RACE"      title="Race — max performance">
+            <span class="mode-btn-icon">🏎️</span><span class="mode-btn-label">RACE</span>
+          </button>
+          <button class="mode-btn" data-mode="RISK"      title="Risk — beyond safe thresholds">
+            <span class="mode-btn-icon">⚠️</span><span class="mode-btn-label">RISK</span>
+          </button>
+          <button class="mode-btn" data-mode="HIGH_RISK" title="High Risk — critical stress">
+            <span class="mode-btn-icon">🔴</span><span class="mode-btn-label">HIGH RISK</span>
+          </button>
+          <button class="mode-btn emergency-btn" data-mode="ACCIDENT" title="Accident — emergency SOS">
+            <span class="mode-btn-icon">🚨</span><span class="mode-btn-label">ACCIDENT</span>
+          </button>
+          <button class="mode-btn" data-mode="DEFECT"    title="Defect — fault/limp mode">
+            <span class="mode-btn-icon">🔧</span><span class="mode-btn-label">DEFECT</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode description banner -->
+      <div class="mode-banner" id="mode-banner"></div>
+    </div>
+
+    <div class="vm-layout">
+
+      <!-- Left: 3D Hologram -->
+      <div class="vm-hologram-col">
+        <div class="hologram-frame">
+          <div class="holo-corner tl"></div>
+          <div class="holo-corner tr"></div>
+          <div class="holo-corner bl"></div>
+          <div class="holo-corner br"></div>
+          <canvas id="vehicle-canvas" aria-label="3D vehicle hologram" style="background:#020c12;display:block;width:100%;height:100%;"></canvas>
+          <div class="holo-overlay">
+            <div class="holo-tag top-left" id="holo-speed">
+              <span class="ht-label">SPEED</span>
+              <span class="ht-value" id="hv-speed">-- km/h</span>
+            </div>
+            <div class="holo-tag top-right" id="holo-range">
+              <span class="ht-label">RANGE</span>
+              <span class="ht-value" id="hv-range">-- km</span>
+            </div>
+            <div class="holo-tag bot-left" id="holo-rpm">
+              <span class="ht-label">MOTOR RPM</span>
+              <span class="ht-value" id="hv-rpm">--</span>
+            </div>
+            <div class="holo-tag bot-right" id="holo-power">
+              <span class="ht-label">POWER</span>
+              <span class="ht-value" id="hv-power">-- kW</span>
+            </div>
+          </div>
+        </div>
+        <div class="holo-regen" id="holo-regen">
+          <span class="regen-icon">↺</span> REGENERATIVE BRAKING ACTIVE
+        </div>
+      </div>
+
+      <!-- Right: Gauges & Stats -->
+      <div class="vm-right-col">
+
+        <!-- Gauges Row -->
+        <div class="gauges-row">
+          <div class="gauge-wrap">
+            <canvas id="speedometer-canvas" width="220" height="220" aria-label="Speedometer"></canvas>
+            <div class="gauge-label">VELOCITY</div>
+          </div>
+          <div class="gauge-wrap">
+            <canvas id="battery-canvas" width="220" height="220" aria-label="Battery level"></canvas>
+            <div class="gauge-label">BATTERY</div>
+          </div>
+          <div class="gauge-wrap">
+            <canvas id="power-canvas" width="220" height="220" aria-label="Power output"></canvas>
+            <div class="gauge-label">POWER</div>
+          </div>
+        </div>
+
+        <!-- Stat Tiles Row -->
+        <div class="vm-stats-row">
+          <div class="vm-stat-tile">
+            <div class="vmst-icon">🌡️</div>
+            <div class="vmst-val" id="vmst-bat-temp">--°C</div>
+            <div class="vmst-label">Battery Temp</div>
+          </div>
+          <div class="vm-stat-tile">
+            <div class="vmst-icon">❤️</div>
+            <div class="vmst-val" id="vmst-bat-health">--%</div>
+            <div class="vmst-label">Battery Health</div>
+          </div>
+          <div class="vm-stat-tile">
+            <div class="vmst-icon">🌬️</div>
+            <div class="vmst-val" id="vmst-cabin-temp">--°C</div>
+            <div class="vmst-label">Cabin Temp</div>
+          </div>
+          <div class="vm-stat-tile">
+            <div class="vmst-icon">📍</div>
+            <div class="vmst-val" id="vmst-odo">-- km</div>
+            <div class="vmst-label">Odometer</div>
+          </div>
+          <div class="vm-stat-tile">
+            <div class="vmst-icon">⚡</div>
+            <div class="vmst-val" id="vmst-efficiency">-- kWh</div>
+            <div class="vmst-label">Efficiency/100km</div>
+          </div>
+        </div>
+
+        <!-- Tyre Pressure -->
+        <div class="tyre-section">
+          <div class="tyre-title">TYRE PRESSURES (PSI)</div>
+          <div class="tyre-layout">
+            <div class="tyre-car-svg" aria-hidden="true">
+              <svg viewBox="0 0 200 300" width="90">
+                <rect x="50" y="60" width="100" height="160" rx="18" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.4"/>
+                <rect x="60" y="90" width="80" height="80" rx="10" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.3"/>
+                <line x1="100" y1="60" x2="100" y2="220" stroke="#00e5ff" stroke-width="1" opacity="0.2"/>
+              </svg>
+            </div>
+            <div class="tyre-grid">
+              <div class="tyre-tile" id="tyre-fl"><span class="tyre-pos">FL</span><span class="tyre-val" id="tv-fl">--</span></div>
+              <div class="tyre-tile" id="tyre-fr"><span class="tyre-pos">FR</span><span class="tyre-val" id="tv-fr">--</span></div>
+              <div class="tyre-tile" id="tyre-rl"><span class="tyre-pos">RL</span><span class="tyre-val" id="tv-rl">--</span></div>
+              <div class="tyre-tile" id="tyre-rr"><span class="tyre-pos">RR</span><span class="tyre-val" id="tv-rr">--</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time-series Charts -->
+    <div class="vm-charts-section">
+      <div class="vm-chart-card">
+        <div class="vmc-title">Speed History</div>
+        <canvas id="vm-speed-chart"></canvas>
+      </div>
+      <div class="vm-chart-card">
+        <div class="vmc-title">Battery Level</div>
+        <canvas id="vm-battery-chart"></canvas>
+      </div>
+      <div class="vm-chart-card">
+        <div class="vmc-title">Power Output (kW)</div>
+        <canvas id="vm-power-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PAGE: ABOUT ══════════════════════════════════════ -->
+  <section id="page-about" class="page" data-page="about">
+    <div class="about-hero">
+      <h1 class="about-title">About EV_Q:?</h1>
+      <p class="about-sub">The world's most comprehensive multi-agent EV intelligence platform</p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-mission card-glow">
+        <h2>🎯 Our Mission</h2>
+        <p>EV_Q democratises electric vehicle knowledge by combining cutting-edge multi-agent AI with real-time web intelligence. Whether you're a first-time buyer, a current owner needing support, or a fleet manager analysing costs — EV_Q is your always-on expert team.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card card-glow">
+          <div class="ac-icon">🔧</div>
+          <h3>Technical Expertise</h3>
+          <p>Expert diagnosis for battery issues, charging faults, range anxiety & maintenance with step-by-step guidance.</p>
+        </div>
+        <div class="about-card card-glow">
+          <div class="ac-icon">🚗</div>
+          <h3>Market Intelligence</h3>
+          <p>Compare models, track live pricing, estimate resale values & check real inventory via web search.</p>
+        </div>
+        <div class="about-card card-glow">
+          <div class="ac-icon">💳</div>
+          <h3>Financial Clarity</h3>
+          <p>True cost of EV ownership — EMI breakdowns, subsidy maximisation & comprehensive TCO analysis.</p>
+        </div>
+        <div class="about-card card-glow">
+          <div class="ac-icon">🛡️</div>
+          <h3>Policy Navigation</h3>
+          <p>Navigate insurance, warranties, safety compliance & government incentive programmes with confidence.</p>
+        </div>
+        <div class="about-card card-glow">
+          <div class="ac-icon">🧠</div>
+          <h3>Smart Recommendations</h3>
+          <p>Personalised EV picks ranked by your unique budget, usage pattern & charging access.</p>
+        </div>
+        <div class="about-card card-glow">
+          <div class="ac-icon">⚡</div>
+          <h3>Real-time Data</h3>
+          <p>Live Google Search integration — every agent has access to the latest market and technical information.</p>
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <div class="arch-section card-glow">
+        <h2>🏗️ Agent Architecture</h2>
+        <div class="arch-diagram">
+          <div class="arch-user">👤 User Query</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-manager">⚡ EVQ_Manager<br/><small>Orchestrator</small></div>
+          <div class="arch-arrow">↓ Routes to</div>
+          <div class="arch-agents">
+            <div class="arch-agent" style="--c:#00e5ff">⚙️ Technician</div>
+            <div class="arch-agent" style="--c:#00ff9d">🚗 Reseller</div>
+            <div class="arch-agent" style="--c:#ffb800">💳 Financier</div>
+            <div class="arch-agent" style="--c:#ff6b35">🛡️ Policy</div>
+            <div class="arch-agent" style="--c:#a78bfa">🧠 Recommender</div>
+          </div>
+          <div class="arch-arrow">↓ Synthesised response</div>
+          <div class="arch-user">💬 Answer to User</div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="tech-section card-glow">
+        <h2>💡 Technology Stack</h2>
+        <div class="tech-grid">
+          <div class="tech-pill">Google ADK</div>
+          <div class="tech-pill">Gemini 2.5 Flash Lite</div>
+          <div class="tech-pill">FastAPI</div>
+          <div class="tech-pill">Three.js</div>
+          <div class="tech-pill">GSAP</div>
+          <div class="tech-pill">Chart.js</div>
+          <div class="tech-pill">Google Search</div>
+          <div class="tech-pill">InMemoryRunner</div>
+          <div class="tech-pill">Uvicorn</div>
+          <div class="tech-pill">Python 3.11+</div>
+        </div>
+      </div>
+
+      <!-- Who benefits -->
+      <div class="who-section">
+        <h2>📋 Who Benefits?</h2>
+        <div class="who-grid">
+          <div class="who-card card-glow">
+            <div class="wc-icon">🔰</div>
+            <h3>First-time Buyers</h3>
+            <p>Understand EV basics, compare models & make confident purchase decisions.</p>
+          </div>
+          <div class="who-card card-glow">
+            <div class="wc-icon">👤</div>
+            <h3>Current Owners</h3>
+            <p>Technical support, maintenance tips & range/charging optimisation.</p>
+          </div>
+          <div class="who-card card-glow">
+            <div class="wc-icon">💼</div>
+            <h3>Fleet Managers</h3>
+            <p>Cost analysis, financing strategy & multi-vehicle management support.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version -->
+      <div class="version-card card-glow">
+        <div class="version-grid">
+          <div><strong>Version</strong><span>2.0.0</span></div>
+          <div><strong>Release</strong><span>2025</span></div>
+          <div><strong>Model</strong><span>Gemini 2.5 Flash Lite</span></div>
+          <div><strong>Framework</strong><span>FastAPI + Google ADK</span></div>
+        </div>
+        <button class="btn-primary mt" data-goto="neural-hub">💬 Try EV_Q Now</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p class="footer-brand">⚡ EV_Q:? — Electric Vehicle Intelligence</p>
+      <p class="footer-sub">Multi-Agent Architecture · Gemini 2.5 Flash Lite · Google ADK · FastAPI</p>
+      <p class="footer-copy">© 2025 EV_Q. Making Electric Mobility Accessible for Everyone.</p>
+    </footer>
+  </section>
+
+<!-- ══ EMERGENCY OVERLAY ══════════════════════════════════════════════════ -->
+<div id="emergency-overlay" class="emergency-overlay" aria-hidden="true">
+  <div class="eo-panel">
+    <div class="eo-siren">🚨</div>
+    <h2 class="eo-title">ACCIDENT DETECTED</h2>
+    <p class="eo-sub">Emergency SOS Activated</p>
+    <div class="eo-location" id="eo-location">
+      <span class="eo-loc-icon">📍</span>
+      <span id="eo-loc-text">Acquiring GPS location…</span>
+    </div>
+    <div class="eo-contacts" id="eo-contacts">
+      <div class="eo-contact"><span>🚑</span><span>Ambulance — 108</span><span class="eo-status sending">NOTIFYING…</span></div>
+      <div class="eo-contact"><span>🚔</span><span>Police — 100</span><span class="eo-status sending">NOTIFYING…</span></div>
+      <div class="eo-contact"><span>👨‍👩‍👦</span><span>Family Member</span><span class="eo-status sending">NOTIFYING…</span></div>
+    </div>
+    <div class="eo-msg" id="eo-msg"></div>
+    <div class="eo-map" id="eo-map-link"></div>
+    <div class="eo-actions">
+      <button class="eo-btn-cancel" id="eo-cancel">✕ Cancel Emergency</button>
+      <a class="eo-btn-call" href="tel:108">📞 Call 108 Now</a>
+    </div>
+    <div class="eo-timer">Auto-sends in <span id="eo-countdown">10</span>s</div>
+  </div>
+</div>
+</main><!-- /main -->
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+
+<script src="js/three-scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
